@@ -1,0 +1,13 @@
+{
+  "name": "opencode-go-usage",
+  "version": "1.1.0",
+  "type": "module",
+  "exports": {
+    ".": "./index.ts",
+    "./rpc": "./rpc.cjs",
+    "./gui-experimental": "./dist/gui-experimental.cjs"
+  },
+  "dependencies": {
+    "@opencode/plugin": "latest"
+  }
+}

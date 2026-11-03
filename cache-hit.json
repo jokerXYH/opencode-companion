@@ -1,0 +1,32 @@
+{
+  "$comment": "lang: en | zh | auto. Default en.",
+  "currency": "CNY",
+  "costUnit": "USD",
+  "rate": 6.77,
+  "display": {
+    "lang": "zh",
+    "panelBorder": true,
+    "speedUnit": "tps"
+  },
+  "dynamicPricing": {
+    "enabled": true,
+    "timezone": "Asia/Shanghai",
+    "schedule": [
+      { "level": "peak", "windows": [
+        { "start": "09:00", "end": "12:00", "days": [1, 2, 3, 4, 5] },
+        { "start": "14:00", "end": "18:00", "days": [1, 2, 3, 4, 5] }
+      ] },
+      { "level": "offpeak", "windows": [] }
+    ],
+    "contextThreshold": 200000,
+    "providers": {
+      "opencode-go": {
+        "models": {
+          "deepseek-v4.1-flash": {
+            "multipliers": { "peak": 1, "offpeak": 0.5 }
+          }
+        }
+      }
+    }
+  }
+}
