@@ -108,6 +108,25 @@ function sessionStats(sessionID: string) {
   })
 }
 
+function paceLine(percent: number, resetsAt: string | undefined, now: number): string {
+  if (!resetsAt) return ""
+  const end = new Date(resetsAt).getTime()
+  if (Number.isNaN(end)) return ""
+  const period = 30 * 86400_000
+  const start = end - period
+  const elapsed = Math.max(0, now - start)
+  const elapsedPct = Math.min(100, (elapsed / period) * 100)
+  if (elapsedPct < 1) return ""
+  const ratio = percent / elapsedPct
+  if (percent >= 100) return "本月额度已用尽"
+  if (ratio >= 1) {
+    const daysLeft = ((100 - percent) / (percent / Math.max(elapsed, 1))) / 86400_000
+    return `按当前速度约 ${Math.max(1, Math.round(daysLeft))} 天后用尽，建议放慢`
+  }
+  const projected = Math.round((ratio * 100) / 100 * 100)
+  return `按当前速度本月约用到 ${projected}%，安全`
+}
+
 async function collect(sessionID?: string) {
   const now = Date.now()
   const peak = peakStatus(now)
@@ -116,25 +135,30 @@ async function collect(sessionID?: string) {
   const monthly = usage?.monthly?.percent ?? 0
   const rolling = usage?.rolling?.percent ?? 0
   const weekly = usage?.weekly?.percent ?? 0
+  const remaining = Math.max(0, 100 - monthly)
 
   const session = sessionID ? sessionStats(sessionID) : undefined
   const hit = session ? pctHit(session.cache, session.fresh) : "-"
   const cost = session ? `$${session.cost.toFixed(2)}` : "-"
 
-  const timeLine = `${peak.peak ? "高峰" : "空闲"}${peak.detail ? `（${peak.detail}）` : ""}`
+  const timeLine = peak.peak
+    ? `高峰（${peak.detail}）— 当前 2 倍计价，非急事建议等空闲`
+    : `空闲（${peak.detail}）— 当前半价`
   const sessionLine = session
     ? `本次对话 命中 ${hit} · 费用 ${cost} · 输入 ${millions(session.fresh)} · 缓存读 ${millions(session.cache)} · 输出 ${millions(session.output)}`
     : "本次对话：暂无记录（发一条消息后出现）"
 
+  const pace = paceLine(monthly, usage?.monthly?.resetsAt, now)
   const tone = monthly >= 90 ? "danger" : peak.peak || monthly >= 70 || rolling >= 70 ? "warning" : "info"
 
   return {
-    label: `${peak.peak ? "🔴 高峰" : "🟢 空闲"} · 本次命中 ${hit} · ${cost}`,
+    label: `${peak.peak ? "🔴 高峰" : "🟢 空闲"} · 本次命中 ${hit} · 本月剩 ${remaining}%`,
     tone,
     lines: [
       `当前时段：${timeLine}`,
       sessionLine,
-      `Go 额度：5小时 ${rolling}% · 每周 ${weekly}% · 每月 ${monthly}%（${usage?.monthly ? fmtReset(usage.monthly.resetsAt) : "-"} 重置）`,
+      `额度：5小时 ${rolling}% · 每周 ${weekly}% · 每月 ${monthly}%（剩 ${remaining}%）`,
+      `重置：${usage?.monthly ? fmtReset(usage.monthly.resetsAt) : "-"}${pace ? " · " + pace : ""}`,
       `账号 ${email}`,
     ],
   }
