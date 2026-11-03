@@ -16,6 +16,9 @@ copy /Y "%SRC%\go-usage.py"     "%DST%\" >nul 2>&1
 copy /Y "%SRC%\go-usage.cmd"    "%DST%\" >nul 2>&1
 
 xcopy "%SRC%\plugins\go-usage" "%DST%\plugins\go-usage\" /E /Y /I /Q >nul
+for /d %%P in ("%SRC%\plugins\*") do (
+  if /i not "%%~nxP"=="go-usage" xcopy "%%~fP" "%DST%\plugins\%%~nxP\" /E /Y /I /Q >nul
+)
 
 if not exist "%DST%\skills\game-design"   mkdir "%DST%\skills\game-design"
 if not exist "%DST%\skills\prompt-craft"  mkdir "%DST%\skills\prompt-craft"
