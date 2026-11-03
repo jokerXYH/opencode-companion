@@ -150,8 +150,6 @@ async function collect(sessionID?: string) {
     const total = session.cache + session.fresh
     const hitPct = total === 0 ? 100 : (session.cache / total) * 100
     const avgContext = session.cache / Math.max(1, session.requests)
-    if (session.requests >= 30)
-      warnings.push(`本次会话已 ${session.requests} 轮，上下文越长每轮越贵 —— 建议开新会话`)
     if (session.requests > 3 && hitPct < 90)
       warnings.push(`命中率 ${hitPct.toFixed(1)}% 低于 90% —— 检查是否中途换过模型或改过配置`)
     if (avgContext > 150_000)
