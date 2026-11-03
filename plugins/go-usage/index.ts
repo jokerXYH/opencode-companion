@@ -99,11 +99,15 @@ function sessionStats(sessionID: string) {
       tokens_cache_read: number | null
     } | null
     if (!row) return undefined
+    const count = db
+      .query("select count(*) as n from session_message where session_id = ? and type = 'assistant'")
+      .get(sessionID) as { n: number } | null
     return {
       cost: row.cost ?? 0,
       fresh: row.tokens_input ?? 0,
       cache: row.tokens_cache_read ?? 0,
       output: (row.tokens_output ?? 0) + (row.tokens_reasoning ?? 0),
+      requests: count?.n ?? 0,
     }
   })
 }
@@ -141,20 +145,36 @@ async function collect(sessionID?: string) {
   const hit = session ? pctHit(session.cache, session.fresh) : "-"
   const cost = session ? `$${session.cost.toFixed(2)}` : "-"
 
+  const warnings: string[] = []
+  if (session) {
+    const total = session.cache + session.fresh
+    const hitPct = total === 0 ? 100 : (session.cache / total) * 100
+    const avgContext = session.cache / Math.max(1, session.requests)
+    if (session.requests >= 30)
+      warnings.push(`本次会话已 ${session.requests} 轮，上下文越长每轮越贵 —— 建议开新会话`)
+    if (session.requests > 3 && hitPct < 90)
+      warnings.push(`命中率 ${hitPct.toFixed(1)}% 低于 90% —— 检查是否中途换过模型或改过配置`)
+    if (avgContext > 150_000)
+      warnings.push(`平均上下文 ${Math.round(avgContext / 1000)}K，偏大 —— 建议 /compact 或开新会话`)
+  }
+  if (peak.peak) warnings.push("高峰时段 2 倍计价 —— 非急事可等空闲再干")
+  if (remaining < 20) warnings.push(`本月额度仅剩 ${remaining}% —— 优先用免费模型或等重置`)
+
   const timeLine = peak.peak
     ? `高峰（${peak.detail}）— 当前 2 倍计价，非急事建议等空闲`
     : `空闲（${peak.detail}）— 当前半价`
   const sessionLine = session
-    ? `本次对话 命中 ${hit} · 费用 ${cost} · 输入 ${millions(session.fresh)} · 缓存读 ${millions(session.cache)} · 输出 ${millions(session.output)}`
+    ? `本次对话 命中 ${hit} · 费用 ${cost} · ${session.requests} 轮 · 输入 ${millions(session.fresh)} · 缓存读 ${millions(session.cache)} · 输出 ${millions(session.output)}`
     : "本次对话：暂无记录（发一条消息后出现）"
 
   const pace = paceLine(monthly, usage?.monthly?.resetsAt, now)
-  const tone = monthly >= 90 ? "danger" : peak.peak || monthly >= 70 || rolling >= 70 ? "warning" : "info"
+  const tone = monthly >= 90 || warnings.length >= 2 ? "danger" : warnings.length > 0 || monthly >= 70 || rolling >= 70 ? "warning" : "info"
 
   return {
-    label: `${peak.peak ? "🔴 高峰" : "🟢 空闲"} · 本次命中 ${hit} · 本月剩 ${remaining}%`,
+    label: `${warnings.length > 0 ? "⚠ " : ""}${peak.peak ? "🔴" : "🟢"} 命中 ${hit} · 本月剩 ${remaining}%`,
     tone,
     lines: [
+      ...(warnings.length > 0 ? warnings.map((w) => `⚠ ${w}`) : []),
       `当前时段：${timeLine}`,
       sessionLine,
       `额度：5小时 ${rolling}% · 每周 ${weekly}% · 每月 ${monthly}%（剩 ${remaining}%）`,
@@ -172,8 +192,8 @@ export default Plugin.define({
         name: "go_usage",
         description: "查看 OpenCode Go 套餐额度、当前峰谷时段以及本次对话的命中率与消耗。",
         input: { type: "object", properties: {}, additionalProperties: false },
-        execute: async () => {
-          const data = await collect()
+        execute: async (_input: unknown, context: { sessionID?: string }) => {
+          const data = await collect(context?.sessionID)
           return { content: [data.label, ...data.lines].join("\n") }
         },
       })
