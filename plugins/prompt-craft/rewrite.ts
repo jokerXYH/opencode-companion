@@ -25,7 +25,7 @@ const INSTRUCTIONS = `你是「提示词编译器」。把用户随手写的一�
 9. 篇幅尽量不超过原文的 3 倍。宁可短，不要注水。`
 
 const PREFIX =
-  /^(改写后|优化后|改写版本|优化版本|重写后|以下是[^\n]{0,20}?[:：]|rewritten( prompt)?[:：]|here(?:'s| is)[^\n]{0,30}?[:：])\s*/i
+  /^(?:(?:改写后|优化后|改写版本|优化版本|重写后)\s*[:：]|以下是[^\n]{0,20}?[:：]|rewritten(?: prompt)?\s*[:：]|here(?:'s| is)[^\n]{0,30}?[:：])\s*/i
 
 /** 拼出发给改写模型的完整 prompt。 */
 export function buildRewritePrompt(text: string): string {

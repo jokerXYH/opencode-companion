@@ -1,0 +1,25 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugins": [
+    {
+      "package": "../plugins/prompt-craft",
+      "options": {
+        "enabled": true,
+        "minChars": 4,
+        "maxChars": 4000,
+        "timeoutMs": 15000,
+        "cooldownMs": 60000,
+        "debug": false
+      }
+    },
+    {
+      "package": "../plugins/go-usage",
+      "options": {
+        "timezoneOffsetMinutes": 480,
+        "peakWindows": ["09:00-12:00", "14:00-18:00"],
+        "workdays": [1, 2, 3, 4, 5],
+        "warnings": true
+      }
+    }
+  ]
+}

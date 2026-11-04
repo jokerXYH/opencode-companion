@@ -1,7 +1,7 @@
 ---
 name: prompt-craft
 description: Rewrite a vague request into a precise, executable prompt for a coding agent. Use when the user asks to improve, optimize, or structure a prompt, when a request keeps producing the wrong result, or when the user wants a reusable prompt template.
-license: Local skill, no warranty.
+license: MIT
 ---
 
 # Prompt Craft

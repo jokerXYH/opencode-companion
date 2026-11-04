@@ -1,6 +1,10 @@
-const { Rpc } = require("@opencode/plugin/rpc")
+import { Rpc } from "@opencode/plugin/rpc"
 
-const GoUsage = Rpc.define({
+/**
+ * Typed contract shared by the server part, the desktop GUI part, and external
+ * clients. Keep `dist/gui-experimental.cjs` in sync when this changes.
+ */
+export const GoUsage = Rpc.define({
   id: "go-usage",
   methods: {
     stats: {
@@ -24,5 +28,3 @@ const GoUsage = Rpc.define({
   },
   events: {},
 })
-
-module.exports = { GoUsage }

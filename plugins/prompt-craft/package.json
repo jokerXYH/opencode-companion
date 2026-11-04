@@ -1,11 +1,36 @@
 {
-  "name": "opencode-prompt-craft",
-  "version": "0.1.0",
+  "name": "opencode-companion-prompt-craft",
+  "version": "1.0.0",
+  "description": "OpenCode plugin that rewrites a rough request into a structured, executable prompt before it reaches the agent.",
   "type": "module",
+  "license": "MIT",
+  "author": "jokerXYH",
+  "homepage": "https://github.com/jokerXYH/opencode-companion/tree/main/plugins/prompt-craft",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jokerXYH/opencode-companion.git",
+    "directory": "plugins/prompt-craft"
+  },
+  "bugs": {
+    "url": "https://github.com/jokerXYH/opencode-companion/issues"
+  },
+  "keywords": [
+    "opencode",
+    "opencode-plugin",
+    "prompt",
+    "prompt-engineering",
+    "prompt-rewrite",
+    "ai-coding"
+  ],
   "exports": {
     ".": "./index.ts"
   },
+  "files": [
+    "index.ts",
+    "rewrite.ts",
+    "README.md"
+  ],
   "dependencies": {
-    "@opencode/plugin": "latest"
+    "@opencode/plugin": "^2.2.5"
   }
 }

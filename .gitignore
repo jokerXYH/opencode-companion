@@ -1,0 +1,12 @@
+node_modules/
+*.log
+*.tsbuildinfo
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+coverage/
+
+# Keep the committed desktop GUI bundle.
+!plugins/go-usage/dist/
+!plugins/go-usage/dist/gui-experimental.cjs

@@ -1,13 +1,40 @@
 {
-  "name": "opencode-go-usage",
-  "version": "1.1.0",
+  "name": "opencode-companion-go-usage",
+  "version": "1.0.0",
+  "description": "OpenCode plugin that shows OpenCode Go quota, peak/off-peak pricing, and per-session cache and spend.",
   "type": "module",
+  "license": "MIT",
+  "author": "jokerXYH",
+  "homepage": "https://github.com/jokerXYH/opencode-companion/tree/main/plugins/go-usage",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jokerXYH/opencode-companion.git",
+    "directory": "plugins/go-usage"
+  },
+  "bugs": {
+    "url": "https://github.com/jokerXYH/opencode-companion/issues"
+  },
+  "keywords": [
+    "opencode",
+    "opencode-plugin",
+    "opencode-go",
+    "usage",
+    "quota",
+    "cache-hit"
+  ],
   "exports": {
     ".": "./index.ts",
-    "./rpc": "./rpc.cjs",
+    "./rpc": "./rpc.ts",
     "./gui-experimental": "./dist/gui-experimental.cjs"
   },
+  "files": [
+    "index.ts",
+    "lib.ts",
+    "rpc.ts",
+    "dist/gui-experimental.cjs",
+    "README.md"
+  ],
   "dependencies": {
-    "@opencode/plugin": "latest"
+    "@opencode/plugin": "^2.2.5"
   }
 }

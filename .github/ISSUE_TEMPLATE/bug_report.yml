@@ -1,0 +1,70 @@
+name: Bug report
+description: Report a broken install, a plugin error, or incorrect behavior.
+title: "bug: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not paste access tokens, credentials, full prompts, or private logs.
+        For security issues, use the private advisory link in SECURITY.md.
+  - type: dropdown
+    id: plugin
+    attributes:
+      label: Plugin
+      options:
+        - prompt-craft
+        - go-usage
+        - install / docs
+        - not sure
+    validations:
+      required: true
+  - type: input
+    id: opencode
+    attributes:
+      label: OpenCode version
+      placeholder: "opencode --version"
+    validations:
+      required: true
+  - type: input
+    id: plugin-version
+    attributes:
+      label: Plugin version or commit
+      placeholder: "v1.0.0 or commit SHA"
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: OS
+      placeholder: "Windows 11 / macOS 15 / Ubuntu 24.04"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. install with ...
+        2. send ...
+        3. see ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log lines
+      description: Redact tokens, account identifiers, and prompt contents.
+      render: text
