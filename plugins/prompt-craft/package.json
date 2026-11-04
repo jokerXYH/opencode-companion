@@ -1,6 +1,6 @@
 {
   "name": "opencode-companion-prompt-craft",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "OpenCode plugin that rewrites a rough request into a structured, executable prompt before it reaches the agent.",
   "type": "module",
   "license": "MIT",
@@ -28,7 +28,8 @@
   "files": [
     "index.ts",
     "rewrite.ts",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "dependencies": {
     "@opencode/plugin": "^2.2.5"

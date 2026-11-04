@@ -15,7 +15,7 @@ import {
 } from "./lib"
 
 const USAGE_URL = "https://opencode.ai/inference/go/v1/usage"
-const USER_AGENT = "opencode-companion-go-usage/1.0.0"
+const USER_AGENT = "opencode-companion-go-usage/1.0.1"
 const REQUEST_TIMEOUT_MS = 8_000
 
 interface UsageWindow {

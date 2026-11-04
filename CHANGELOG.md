@@ -4,6 +4,12 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-11-04
+
+### Fixed
+
+- Include the MIT `LICENSE` file in both plugin package tarballs.
+
 ## [1.0.0] - 2026-11-04
 
 ### Added
@@ -24,5 +30,6 @@ All notable changes to this project are documented here. The format follows [Kee
 - `go-usage` session schema errors no longer hide account quota data.
 - Removed personal configuration, the duplicate Python CLI, sync scripts, and the unrelated game-design skill from the public repository.
 
-[Unreleased]: https://github.com/jokerXYH/opencode-companion/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/jokerXYH/opencode-companion/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/jokerXYH/opencode-companion/releases/tag/v1.0.1
 [1.0.0]: https://github.com/jokerXYH/opencode-companion/releases/tag/v1.0.0

@@ -1,6 +1,6 @@
 {
   "name": "opencode-companion-go-usage",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "OpenCode plugin that shows OpenCode Go quota, peak/off-peak pricing, and per-session cache and spend.",
   "type": "module",
   "license": "MIT",
@@ -32,7 +32,8 @@
     "lib.ts",
     "rpc.ts",
     "dist/gui-experimental.cjs",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "dependencies": {
     "@opencode/plugin": "^2.2.5"
