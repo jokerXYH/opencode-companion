@@ -15,7 +15,7 @@ Two small, focused plugins for [OpenCode](https://opencode.ai): write clearer pr
 | **prompt-craft** | Rewrites a rough request into a structured prompt (goal / context / constraints / acceptance / out of scope) before it reaches the agent. Adds a `/craft` command and a manual escape hatch. | Any model available to OpenCode |
 | **go-usage** | Shows OpenCode Go quota, current peak/off-peak pricing, this session's cache hit rate, spend, and context warnings. Adds a `go_usage` tool and an optional desktop pill. | An OpenCode Go subscription on OpenCode 2.2.5+ |
 
-Both plugins fail open: if a rewrite or usage request fails, your message or session is never blocked.
+Both plugins fail open: if a rewrite or usage request fails, your message or session is never blocked. Plugin UI strings are currently Chinese; docs are bilingual and localization PRs are welcome.
 
 ## Install
 
@@ -51,7 +51,7 @@ The desktop pill and other GUI parts are loaded only from the global configurati
 
 ### prompt-craft
 
-Type normally. Before a message enters the session, prompt-craft asks the current model to fill the missing slots, then sends the rewritten prompt. The original text is kept in message metadata under `prompt-craft.original`.
+Type normally. Before a message enters the session, prompt-craft asks the current model to fill the missing slots, then sends the rewritten prompt. The original text is kept in the message metadata under the `prompt-craft` key (`original` field).
 
 ```text
 You type:   给游戏加个存档

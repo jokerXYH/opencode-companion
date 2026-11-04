@@ -11,7 +11,7 @@ Rewritten:  目标：玩家退出后重进，能从上次所在关卡继续，�
             不做：多存档槽、自动备份、加密。
 ```
 
-The rewrite happens in a `session.prompt` hook. The rewritten text is the message the agent sees; the original is stored in message metadata as `prompt-craft.original`.
+The rewrite happens in a `session.prompt` hook. The rewritten text is the message the agent sees; the original is stored in message metadata under the `prompt-craft` key (`original` field).
 
 ## Install
 

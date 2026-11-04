@@ -15,7 +15,7 @@
 | **prompt-craft** | 在消息进入会话前，把随手写的一句话补成「目标 / 上下文 / 约束 / 验收 / 不做」五段式提示词。提供 `/craft` 手动入口。 | 任意 OpenCode 可用模型 |
 | **go-usage** | 显示 OpenCode Go 额度、当前峰谷计价、本次会话命中率、费用与上下文提醒。提供 `go_usage` 工具和桌面胶囊。 | OpenCode 2.2.5+ 的 OpenCode Go 订阅 |
 
-两个插件都「失败即放行」：改写或额度请求失败时，消息和会话照常进行，不会被插件挡住。
+两个插件都「失败即放行」：改写或额度请求失败时，消息和会话照常进行，不会被插件挡住。插件界面文案目前为中文；文档为中英双语，欢迎提交本地化 PR。
 
 ## 安装
 
@@ -51,7 +51,7 @@ git clone https://github.com/jokerXYH/opencode-companion.git
 
 ### prompt-craft
 
-正常输入即可。消息进入会话前，prompt-craft 会让当前模型补齐缺失的槽位，再把改写后的文本交给 agent。原文保存在消息 metadata 的 `prompt-craft.original` 中。
+正常输入即可。消息进入会话前，prompt-craft 会让当前模型补齐缺失的槽位，再把改写后的文本交给 agent。原文保存在消息 metadata 的 `prompt-craft` 键下（`original` 字段）。
 
 ```text
 你输入：   给游戏加个存档
