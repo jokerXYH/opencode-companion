@@ -37,7 +37,7 @@ Then reload:
 To pin a release, use a tag or commit instead of `#main`:
 
 ```sh
-opencode plugin add 'github:jokerXYH/opencode-companion#v1.0.0::path:plugins/prompt-craft'
+opencode plugin add 'github:jokerXYH/opencode-companion#v1.0.1::path:plugins/prompt-craft'
 ```
 
 ## Option B — local checkout

@@ -68,7 +68,7 @@ For a local install, `opencode service restart` is the reliable way to pick up c
    - `opencode plugin add 'github:jokerXYH/opencode-companion#main::path:plugins/go-usage'`
    - `opencode plugin list`
    - call `go_usage` and `/craft`
-5. Commit, tag (`v1.0.0`), and push.
+5. Commit, tag (`v1.0.1`), and push.
 6. Create a GitHub release with notes.
 
 The packages are prepared for npm (`opencode-companion-go-usage`, `opencode-companion-prompt-craft`) but are not published yet. If you publish them, run `npm publish -w plugins/go-usage` and `npm publish -w plugins/prompt-craft` after the release checklist.
